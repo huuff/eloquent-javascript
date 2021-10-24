@@ -18,7 +18,18 @@ function fizzBuzz() {
   }
 }
 
+function chessBoard(size) {
+ for (let i = 0; i < size; i++) {
+  if ((i % 2) == 0) {
+    console.log(" ");
+  } else {
+    console.log("#");
+  }
+ } 
+}
+
 module.exports = {
   triangle: triangle,
-  fizzBuzz: fizzBuzz
+  fizzBuzz: fizzBuzz,
+  chessBoard: chessBoard
 };

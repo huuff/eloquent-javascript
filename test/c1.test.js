@@ -1,5 +1,10 @@
 const chapter1 = require("../src/c1");
 
+// TODO: I don't think this works, use jest.spyOn() as in [this second answer](https://stackoverflow.com/questions/41223963/jest-how-to-mock-console-when-it-is-used-by-a-third-party-library)
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 test('prints triangle', () => {
   console.log = jest.fn();
   chapter1.triangle();
@@ -27,4 +32,10 @@ test('correctly FizzBuzzes', () => {
       expect(console.log.mock.calls[i][0]).toBe(iteration);
     }
   }
+});
+
+// TODO: Finish test
+test('chessBoard', () => {
+  chapter1.chessBoard();
+  
 });
