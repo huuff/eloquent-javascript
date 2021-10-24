@@ -1,0 +1,23 @@
+{
+  "name": "eloquent-javascript",
+  "version": "0.0.1",
+  "description": "Exercises from the 'Eloquent Javascript' book",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huuff/eloquent-javascript.git"
+  },
+  "author": "Haf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huuff/eloquent-javascript/issues"
+  },
+  "homepage": "https://github.com/huuff/eloquent-javascript#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
