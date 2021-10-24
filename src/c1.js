@@ -4,4 +4,6 @@ function triangle() {
   }
 }
 
-module.exports = triangle;
+module.exports = {
+  triangle: triangle
+};

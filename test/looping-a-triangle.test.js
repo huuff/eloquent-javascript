@@ -1,8 +1,8 @@
-const triangle = require("../../src/c1/looping-a-triangle");
+const chapter1 = require("../src/c1");
 
 test('prints triangle', () => {
   console.log = jest.fn();
-  triangle();
+  chapter1.triangle();
   expect(console.log.mock.calls[0][0]).toBe('#');
   expect(console.log.mock.calls[1][0]).toBe('##');
   expect(console.log.mock.calls[2][0]).toBe('###');
