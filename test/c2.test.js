@@ -1,4 +1,4 @@
-const chapter1 = require("../src/c1");
+const chapter1 = require("../src/c2");
 
 test('prints triangle', () => {
   const consoleMock = jest.spyOn(console, 'log').mockImplementation();
