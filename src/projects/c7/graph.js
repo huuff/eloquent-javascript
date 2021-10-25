@@ -27,4 +27,6 @@ function buildGraph(edges) {
   return graph;
 }
 
-export default buildGraph(roads);
+module.exports = {
+  graph: buildGraph(roads)
+}
