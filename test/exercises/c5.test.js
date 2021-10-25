@@ -1,4 +1,4 @@
-const chapter5 = require('../src/c5');
+const chapter5 = require('../../src/exercises/c5');
 
 test('Array is flattened', () => {
   expect(chapter5.flatten([1, [2, 3, 4], [5, 6], 7])).toEqual([1, 2, 3, 4, 5, 6, 7]);

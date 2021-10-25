@@ -1,4 +1,4 @@
-const chapter2 = require("../src/c3");
+const chapter2 = require("../../src/exercises/c3");
 
 test("gets minimum", () => {
   expect(chapter2.min(-2, 3)).toBe(-2);

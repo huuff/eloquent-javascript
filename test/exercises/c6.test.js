@@ -1,4 +1,4 @@
-const chapter6 = require("../src/c6");
+const chapter6 = require("../../src/exercises/c6");
 
 test("vectors are plused", () => {
   const vec1 = new chapter6.Vector(1, 2);
