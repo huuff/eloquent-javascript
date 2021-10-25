@@ -19,13 +19,17 @@ function fizzBuzz() {
 }
 
 function chessBoard(size) {
- for (let i = 0; i < size; i++) {
-  if ((i % 2) == 0) {
-    console.log(" ");
-  } else {
-    console.log("#");
+  for (let i = 0; i < size; i++) {
+    let row = "";
+    for (let j = 0; j < size; j++) {
+      if (((i + j) % 2) == 0) {
+        row += " ";
+      } else {
+        row += "#";
+      }
+    } 
+    console.log(row);
   }
- } 
 }
 
 module.exports = {
