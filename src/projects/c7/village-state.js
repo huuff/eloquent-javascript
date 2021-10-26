@@ -24,7 +24,7 @@ class VillageState {
 
   move(destination) {
    if (!roadGraph[this.place].includes(destination)) {
-    return this;
+     throw new Error(`ERROR: ${destination} is not a destination of ${this.place}`);
    } else {
     let parcels = this.parcels.map(p => {
       if (p.place != this.place) return p;
