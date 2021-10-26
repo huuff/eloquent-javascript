@@ -21,8 +21,38 @@ function retryPrimitiveMultiply(x, y) {
   return result;
 }
 
+const box = {
+  locked: true,
+  unlock() {
+    this.locked = false;
+  },
+
+  lock() {
+    this.locked = true;
+  },
+
+  _content: [],
+  get content() {
+    if (this.locked) throw new Error("Locked!");
+    return this._content;
+  }
+}
+
+function withBoxUnlocked(body) {
+  const wasBoxLocked = box.locked;
+  try {
+    box.unlock();
+    body();
+  } finally {
+    if (wasBoxLocked)
+      box.lock();
+  }
+}
+
 module.exports = {
   MultiplicatorUnitFailure: MultiplicatorUnitFailure,
   primitiveMultiply: primitiveMultiply,
-  retryPrimitiveMultiply
+  retryPrimitiveMultiply,
+  box: box,
+  withBoxUnlocked: withBoxUnlocked
 }
