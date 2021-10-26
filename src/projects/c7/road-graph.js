@@ -28,5 +28,5 @@ function buildGraph(edges) {
 }
 
 module.exports = {
-  graph: buildGraph(roads)
+  roadGraph: buildGraph(roads)
 }

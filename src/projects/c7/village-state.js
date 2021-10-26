@@ -1,5 +1,5 @@
-const roadGraph = require("./graph.js").graph;
-const { randomPick } = require("./random.js");
+const { roadGraph } = require("./road-graph.js");
+const { randomPick } = require("./random-pick.js");
 
 class VillageState {
   constructor(place, parcels) {
