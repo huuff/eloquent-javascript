@@ -66,9 +66,28 @@ function goalOrientedRobot({ place, parcels }, route) {
   return { direction: route[0], memory: route.slice(1)};
 }
 
+function bestRobot({ place, parcels }, route) {
+  if (route.length == 0) {
+    let parcelRoutes = [];
+    for (let parcel of parcels) {
+      if (parcel.place != place) {
+        parcelRoutes.push(findRoute(roadGraph, place, parcel.place));
+      } else {
+        parcelRoutes.push(route = findRoute(roadGraph, place, parcel.address));
+      }
+    }
+
+    route = parcelRoutes.reduce((r1, r2) => r1.length < r2.length ? r1 : r2);
+  }
+
+
+  return { direction: route[0], memory: route.slice(1)};
+}
+
 module.exports = {
   runRobot: runRobot,
   randomRobot: randomRobot,
   routeRobot: routeRobot,
-  goalOrientedRobot: goalOrientedRobot
+  goalOrientedRobot: goalOrientedRobot,
+  bestRobot: bestRobot
 }

@@ -1,5 +1,5 @@
 const { VillageState } = require('../../../src/projects/c7/village-state');
-const { runRobot, randomRobot, routeRobot, goalOrientedRobot } = require("../../../src/projects/c7/robots");
+const { runRobot, randomRobot, routeRobot, goalOrientedRobot, bestRobot } = require("../../../src/projects/c7/robots");
 
 test("random robot solves the problem", () => {
   const result = runRobot(VillageState.random(), randomRobot); 
@@ -16,6 +16,12 @@ test("route robot solves the problem", () => {
 
 test("goal oriented robot solves the problem", () => {
   const result = runRobot(VillageState.random(), goalOrientedRobot, []);
+
+  expect(result.finalState.parcels.length).toBe(0);
+});
+
+test("best robot solves the problem", () => {
+  const result = runRobot(VillageState.random(), bestRobot, []);
 
   expect(result.finalState.parcels.length).toBe(0);
 });
