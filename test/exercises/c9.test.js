@@ -59,4 +59,16 @@ test('exercise 7', () => {
   expect(regex7.test('meior')).toBe(false);
 });
 
+test('single quotes converted to double', () => {
+  const originalStory = `
+    This is a text that has content enclosed in 'single quotes'.
+    Note that apostrophes _shouldn't_ be converted. 'Unlike this'.
+  `;
 
+  const expectedStory = `
+    This is a text that has content enclosed in "single quotes".
+    Note that apostrophes _shouldn't_ be converted. "Unlike this".
+  `;
+
+  expect(regexes.singleQuotesToDouble(originalStory)).toEqual(expectedStory);
+})
