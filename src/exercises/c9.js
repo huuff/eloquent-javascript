@@ -10,5 +10,6 @@ module.exports = {
   ex5: /\s(;|.|,|:)/,
   ex6: /\w{6,}/,
   ex7: /\b[^eE]+\b/,
-  singleQuotesToDouble: singleQuotesToDouble
+  singleQuotesToDouble: singleQuotesToDouble,
+  numbers: /^(\+|-)?((\d+)?((e|E)-?\d+)?)(\.\d|\d\.)?(\d+)?$/
 };

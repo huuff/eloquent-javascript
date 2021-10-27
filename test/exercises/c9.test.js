@@ -72,3 +72,17 @@ test('single quotes converted to double', () => {
 
   expect(regexes.singleQuotesToDouble(originalStory)).toEqual(expectedStory);
 })
+
+test('numbers again', () => {
+  const regex = regexes.numbers;
+
+  expect(regex.test('.5')).toBe(true);
+  expect(regex.test('5.')).toBe(true);
+  expect(regex.test('5e-3')).toBe(true);
+  expect(regex.test('1E10')).toBe(true);
+  expect(regex.test('.')).toBe(false);
+  expect(regex.test('-5')).toBe(true);
+  expect(regex.test('+89')).toBe(true);
+  expect(regex.test('+-48')).toBe(false);
+  expect(regex.test('test')).toBe(false);
+});
