@@ -44,9 +44,6 @@ specialForms.define = (args, scope) => {
 }
 
 function evaluate(expr, scope) {
-  console.log(`SpecialForms: ${JSON.stringify(specialForms)}`);
-  console.log(`Scope: ${JSON.stringify(scope)}`);
-
   if (expr.type == "value") {
     return expr.value;
   } else if (expr.type == "word") {

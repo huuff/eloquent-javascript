@@ -1,6 +1,5 @@
 const { parse } = require("../../../src/projects/c12/parse");
-const { evaluate } = require("../../../src/projects/c12/evaluate");
-const { topScope } = require("../../../src/projects/c12/top-scope");
+const { run } = require("../../../src/projects/c12/run")
 
 test("parses correctly", () => {
   expect(parse("+(a, 10)")).toEqual({
@@ -14,5 +13,16 @@ test("parses correctly", () => {
 });
 
 test("negation works", () => {
-  expect(evaluate(parse("if(true, false, true)"), topScope));
+  expect(run("if(true, false, true)")).toBe(false);
+});
+
+test("sum of 1 to 10", () => {
+  expect(run(`
+      do(define(total, 0),
+        define(count, 1),
+        while(<(count, 11),
+        do(define(total, +(total, count)),
+          define(count, +(count, 1)))),
+        print(total))
+    `)).toBe(55);
 });
