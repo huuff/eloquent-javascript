@@ -26,3 +26,20 @@ test("sum of 1 to 10", () => {
         print(total))
     `)).toBe(55);
 });
+
+test("plus one function", () => {
+  expect(run(`
+    do(define(plusOne, fun(a, +(a, 1))),
+      print(plusOne(10)))
+  `)).toBe(11);
+});
+
+test("tenth power of 2 is 1024", () => {
+  run(`
+    do(define(pow, fun(base, exp,
+      if(==(exp, 0),
+        1,
+        *(base, pow(base, -(exp, 1)))))),
+        print(pow(2, 10)))
+    `);
+});
