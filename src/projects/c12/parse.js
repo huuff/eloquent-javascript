@@ -1,3 +1,5 @@
+const { specialForms } = require('./special-forms');
+
 function skipSpace(string) {
   let first = string.search(/\S/);
   if (first == -1) 
