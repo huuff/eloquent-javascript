@@ -1,4 +1,4 @@
-const { specialForms } = require('./special-forms');
+const { specialForms } = require('./evaluate');
 
 function skipSpace(string) {
   let first = string.search(/\S/);
