@@ -25,7 +25,10 @@ function request(nest, target, type, content) {
       setTimeout(() => {
         if (done) return;
         else if (n < 3) attempt(n + 1);
-        else reject(new Timeout("Timed out"));
+        else reject(new Timeout(`
+            Request from ${nest.name} to ${target} of ${type} timed out.
+            Contents: ${content}
+          `));
       }, 250);
     }
 
@@ -61,7 +64,8 @@ function sendGossip(nest, message, exceptFor = null) {
   for (let neighbor of nest.neighbors) {
     if (neighbor == exceptFor) continue;
 
-    request(nest, neighbor, "gossip", message);
+    // Just ignore errors, it's flooding
+    request(nest, neighbor, "gossip", message).catch(_ => {});
   }
 }
 
@@ -71,7 +75,7 @@ function broadcastConnections(nest, name, exceptFor = null) {
     request(nest, neighbor, "connections", {
       name,
       neighbors: nest.state.connections.get(name)
-    });
+    }).catch(_ => {});
   }
 }
 
@@ -104,6 +108,7 @@ function routeRequest(nest, target, type, content) {
 function exampleCode() {
   defineRequestType("note", (nest, content, source, done) => {
     console.log(`${nest.name} received note: ${content}`);
+    nest.state.notes.push(content);
     done();
   });
 
@@ -136,6 +141,10 @@ function exampleCode() {
     nest.state.connections.set(nest.name, nest.neighbors);
     broadcastConnections(nest, nest.name);
   });
+
+  everywhere(nest => {
+    nest.state.notes = [];
+  });
 }
 
 module.exports = {
@@ -144,5 +153,6 @@ module.exports = {
   request: request,
   requestType: requestType,
   availableNeighbors: availableNeighbors,
-  sendGossip: sendGossip
+  sendGossip: sendGossip,
+  routeRequest: routeRequest,
 }

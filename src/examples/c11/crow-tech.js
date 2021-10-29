@@ -68,6 +68,7 @@
       this[$network] = network
       this.state = Object.create(null)
       this[$storage] = storage
+      this.failureRate = 0.3;
     }
 
     send(to, type, message, callback) {
@@ -77,7 +78,7 @@
       let handler = this[$network].types[type]
       if (!handler)
         return callback(new Error("Unknown request type " + type))
-      if (Math.random() > 0.03) setTimeout(() => {
+      if (Math.random() > this.failureRate) setTimeout(() => {
         try {
           handler(toNode, ser(message), this.name, (error, response) => {
             setTimeout(() => callback(error, ser(response)), 10)
@@ -86,6 +87,14 @@
           callback(e)
         }
       }, 10 + Math.floor(Math.random() * 10))
+    }
+
+    alwaysSucceed() {
+      this.failureRate = 0;
+    }
+    
+    resetFailureRate() {
+      this.failureRate = 0.3;
     }
 
     readStorage(name, callback) {

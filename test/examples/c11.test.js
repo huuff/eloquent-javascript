@@ -1,6 +1,7 @@
 const { 
   bigOak,
   network,
+  everywhere,
 } = require("../../src/examples/c11/crow-tech");
 
 
@@ -9,6 +10,7 @@ const {
   storage,
   availableNeighbors,
   sendGossip,
+  routeRequest,
 } = require("../../src/examples/c11/c11")
 
 beforeAll(() => {
@@ -17,6 +19,10 @@ beforeAll(() => {
 
 beforeEach(() => {
   jest.useFakeTimers();
+});
+
+afterEach(() => {
+  everywhere((nest) => nest.resetFailureRate());
 });
 
 test("storage is read", () => {
@@ -29,9 +35,8 @@ test("storage is read", () => {
   jest.runAllTimers();
 });
 
-// TODO: Since send is made so that it randomly fails, add a way to modify the value for
-// mocking so that it never fails
 test("note is delivered", () => {
+  everywhere(nest => nest.alwaysSucceed());
   const callback = jest.fn();
 
   bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM", callback);
@@ -58,13 +63,26 @@ test("check available neightbors", async () => {
   expect(reachable).toEqual(["Cow Pasture", "Butcher Shop", "Gilles' Garden"])
 });
 
-test("gossip is really spread", async () => {
+test("gossip is really spread", () => {
+  everywhere(nest => nest.alwaysSucceed());
   const gossipMessage = "Gossip text";
 
   sendGossip(bigOak, gossipMessage);
   jest.runAllTimers();
 
+  // TODO: Can't I just use everywhere?
   for (let nodeName of Object.keys(network.nodes)) {
-    expect(network.nodes[nodeName].state.gossip.includes(gossipMessage)) 
+    expect(network.nodes[nodeName].state.gossip.includes(gossipMessage));
   }
-})
+  jest.runAllTimers();
+});
+
+test("message is routed", async () => {
+  everywhere(nest => nest.alwaysSucceed());
+  jest.useRealTimers();
+  const note = "Test note";
+
+  await routeRequest(bigOak, "Hawthorn", "note", note);
+
+  expect(network.nodes["Hawthorn"].state.notes.includes(note))
+});
