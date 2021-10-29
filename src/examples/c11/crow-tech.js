@@ -56,6 +56,7 @@
 
   const $storage = Symbol("storage"), $network = Symbol("network")
 
+  // Short for serialize
   function ser(value) {
     return value == null ? null : JSON.parse(JSON.stringify(value))
   }
