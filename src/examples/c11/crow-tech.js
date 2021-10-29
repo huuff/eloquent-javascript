@@ -104,6 +104,7 @@
 let network = new Network(connections, storageFor)
 
 module.exports = {
+  network: network,
   bigOak: network.nodes["Big Oak"],
   everywhere: network.everywhere.bind(network),
   defineRequestType: network.defineRequestType.bind(network),

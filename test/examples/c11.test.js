@@ -1,5 +1,6 @@
 const { 
   bigOak,
+  network,
 } = require("../../src/examples/c11/crow-tech");
 
 
@@ -7,6 +8,7 @@ const {
   exampleCode,
   storage,
   availableNeighbors,
+  sendGossip,
 } = require("../../src/examples/c11/c11")
 
 beforeAll(() => {
@@ -55,3 +57,14 @@ test("check available neightbors", async () => {
   const reachable = await availableNeighbors(bigOak);
   expect(reachable).toEqual(["Cow Pasture", "Butcher Shop", "Gilles' Garden"])
 });
+
+test("gossip is really spread", async () => {
+  const gossipMessage = "Gossip text";
+
+  sendGossip(bigOak, gossipMessage);
+  jest.runAllTimers();
+
+  for (let nodeName of Object.keys(network.nodes)) {
+    expect(network.nodes[nodeName].state.gossip.includes(gossipMessage)) 
+  }
+})

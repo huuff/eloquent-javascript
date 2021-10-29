@@ -11,6 +11,8 @@ function storage(nest, name) {
   });
 }
 
+class Timeout extends Error {}
+
 function request(nest, target, type, content) {
   return new Promise((resolve, reject) => {
     let done = false;
@@ -54,6 +56,15 @@ function availableNeighbors(nest) {
   });
 }
 
+function sendGossip(nest, message, exceptFor = null) {
+  nest.state.gossip.push(message);
+  for (let neighbor of nest.neighbors) {
+    if (neighbor == exceptFor) continue;
+
+    request(nest, neighbor, "gossip", message);
+  }
+}
+
 function exampleCode() {
   defineRequestType("note", (nest, content, source, done) => {
     console.log(`${nest.name} received note: ${content}`);
@@ -61,6 +72,12 @@ function exampleCode() {
   });
 
   requestType("ping", () => "pong");
+
+  requestType("gossip", (nest, message, source) => {
+    if (nest.state.gossip.includes(message)) return;
+    console.log(`${nest.name} received gossip ${message} from ${source}`);
+    sendGossip(nest, message, source);
+  });
 
   everywhere(nest => {
     nest.state.gossip = [];
@@ -73,4 +90,5 @@ module.exports = {
   request: request,
   requestType: requestType,
   availableNeighbors: availableNeighbors,
+  sendGossip: sendGossip
 }
