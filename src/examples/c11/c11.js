@@ -11,6 +11,13 @@ function exampleCode() {
   });
 }
 
+function storage(nest, name) {
+  return new Promise(resolve => {
+    nest.readStorage(name, result => resolve(result));
+  });
+}
+
 module.exports = {
-  exampleCode: exampleCode
+  exampleCode: exampleCode,
+  storage: storage,
 }

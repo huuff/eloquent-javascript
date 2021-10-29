@@ -3,12 +3,18 @@ const {
 } = require("../../src/examples/c11/crow-tech");
 
 
-const { exampleCode } = require("../../src/examples/c11/c11")
+const { 
+  exampleCode,
+  storage,
+} = require("../../src/examples/c11/c11")
 
 beforeAll(() => {
   exampleCode();
+});
+
+beforeEach(() => {
   jest.useFakeTimers();
-})
+});
 
 test("storage is read", () => {
   bigOak.readStorage("food caches", caches => {
@@ -21,10 +27,21 @@ test("storage is read", () => {
 });
 
 test("note is delivered", () => {
-  //const callback = () => console.log("Note delivered.");
   const callback = jest.fn();
 
   bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM", callback);
   jest.runAllTimers();
   expect(callback).toHaveBeenCalled();
-})
+});
+
+test("read storage with promises", async () => {
+  jest.useRealTimers();
+  await storage(bigOak, "enemies").then(value => {
+    expect(value).toEqual([
+      "Farmer Jacques' dog",
+      'The butcher',
+      'That one-legged jackdaw',
+      'The boy with the airgun'
+    ]);
+  });
+});
