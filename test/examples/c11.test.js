@@ -6,6 +6,7 @@ const {
 const { 
   exampleCode,
   storage,
+  availableNeighbors,
 } = require("../../src/examples/c11/c11")
 
 beforeAll(() => {
@@ -26,6 +27,8 @@ test("storage is read", () => {
   jest.runAllTimers();
 });
 
+// TODO: Since send is made so that it randomly fails, add a way to modify the value for
+// mocking so that it never fails
 test("note is delivered", () => {
   const callback = jest.fn();
 
@@ -44,4 +47,11 @@ test("read storage with promises", async () => {
       'The boy with the airgun'
     ]);
   });
+});
+
+test("check available neightbors", async () => {
+  jest.useRealTimers();
+
+  const reachable = await availableNeighbors(bigOak);
+  expect(reachable).toEqual(["Cow Pasture", "Butcher Shop", "Gilles' Garden"])
 });
