@@ -22,3 +22,14 @@ test("array element", () => {
       )
     `)).toBe(2);
 });
+
+
+test("array element with comment", () => {
+  expect(run(`
+      do(
+      # The parser should remove this comment
+        define(arr, array(1, 2, 3, 4)),
+        element(arr, 1)
+      )
+    `)).toBe(2);
+});

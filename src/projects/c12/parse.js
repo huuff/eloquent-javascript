@@ -1,6 +1,7 @@
 const { specialForms } = require('./evaluate');
 
 function skipSpace(string) {
+  string = string.replace(/\s*#.*\n/g, ''); // Remove comments (third exercise)
   let first = string.search(/\S/);
   if (first == -1) 
     return "";
