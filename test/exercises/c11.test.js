@@ -5,6 +5,7 @@ const {
 
 const {
   findScalpel,
+  allPromises,
 } = require('../../src/exercises/c11');
 
 const {
@@ -24,4 +25,16 @@ test("scalpel is found", async () => {
   const foundScalpel = await findScalpel(bigOak); 
 
   expect(foundScalpel).toBe("Butcher Shop");
+});
+
+test("all promises", async () => {
+  const promises = [
+    Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)
+  ];
+
+  const results = await allPromises(promises);
+
+  expect(results.includes(1));
+  expect(results.includes(2));
+  expect(results.includes(3));
 });

@@ -19,6 +19,16 @@ async function findScalpel(start) {
   return await routeRequest(start, await storage(start, "scalpel"), "scalpel");
 }
 
+async function allPromises(promises) {
+  let results = [];
+  for (let promise of promises) {
+    results.push(await promise);
+  }
+
+  return results;
+}
+
 module.exports = {
   findScalpel: findScalpel,
+  allPromises: allPromises,
 }
