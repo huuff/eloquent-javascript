@@ -1,4 +1,17 @@
-class Level {
+import { Player, Lava, Coin } from "./actors.js";
+
+const levelChars = {
+  ".": "empty",
+  "#": "wall",
+  "+": "lava",
+  "@": Player,
+  "o": Coin,
+  "=": Lava,
+  "|": Lava,
+  "v": Lava,
+};
+
+export class Level {
   constructor(plan) {
     let rows = plan.trim().split("\n").map(l => [...l]);
     this.height = rows.length;
@@ -19,7 +32,7 @@ class Level {
   }
 }
 
-let simpleLevelPlan = `
+export let simpleLevelPlan = `
 ......................
 ..#................#..
 ..#..............=.#..
