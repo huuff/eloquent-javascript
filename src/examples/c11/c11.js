@@ -128,6 +128,7 @@ async function findInStorage(nest, name) {
   throw new Error("Not found");
 }
 
+// Adds all definitions and functions from the book
 function exampleCode() {
   defineRequestType("note", (nest, content, source, done) => {
     console.log(`${nest.name} received note: ${content}`);
