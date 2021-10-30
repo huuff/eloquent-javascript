@@ -1,3 +1,5 @@
+import { State } from './state';
+
 export class Vec {
   constructor(x, y) {
     this.x = x;
@@ -50,6 +52,10 @@ export class Lava {
       return new Lava(pos, new Vec(0, 3), pos);
     }
   }
+
+  collide(state) {
+    return new State(state.level, state.actors, "lost");
+  }
 }
 
 Lava.prototype.size = new Vec(1, 1);
@@ -69,6 +75,16 @@ export class Coin {
     let basePos = pos.plus(new Vec(0.2, 0.1));
 
     return new Coin(basePos, basePos, Math.random() * Math.PI * 2);
+  }
+
+  collide(state) {
+    let filtered = state.actors.filter(a => a != this);
+    let status = state.status;
+    if (!filtered.some(a => a.type == "coin")) {
+      status = "won";
+    }
+
+    return new State(state.level, filtered, status);
   }
 }
 
