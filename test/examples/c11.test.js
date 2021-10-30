@@ -11,6 +11,7 @@ const {
   availableNeighbors,
   sendGossip,
   routeRequest,
+  findInStorage,
 } = require("../../src/examples/c11/c11")
 
 beforeAll(() => {
@@ -85,4 +86,12 @@ test("message is routed", async () => {
   await routeRequest(bigOak, "Hawthorn", "note", note);
 
   expect(network.nodes["Hawthorn"].state.notes.includes(note))
+});
+
+// This is the only item I know of that isn't in all storages
+test("found in storage", async() => {
+  jest.useRealTimers();
+  const found = await findInStorage(bigOak, "events on 2017-12-21")
+
+  expect(found).toEqual("Deep snow. Butcher's garbage can fell over. We chased off the ravens from Saint-Vulbas.");
 });

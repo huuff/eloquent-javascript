@@ -105,6 +105,29 @@ function routeRequest(nest, target, type, content) {
   }
 }
 
+function network(nest) {
+  return Array.from(nest.state.connections.keys());
+}
+
+async function findInStorage(nest, name) {
+  let local = await storage(nest, name);
+  if (local != null) return local;
+
+  let sources = network(nest).filter(n => n != nest.name);
+  while (sources.length > 0) {
+    let source = sources[Math.floor(Math.random() * sources.length)];
+
+    sources = sources.filter(n => n != source);
+
+    try {
+      let found = await routeRequest(nest, source, "storage", name);
+      if (found != null) return found;
+    } catch (_) {}
+  }
+
+  throw new Error("Not found");
+}
+
 function exampleCode() {
   defineRequestType("note", (nest, content, source, done) => {
     console.log(`${nest.name} received note: ${content}`);
@@ -135,6 +158,8 @@ function exampleCode() {
     return routeRequest(nest, target, type, content);
   });
 
+  requestType("storage", (nest, name) => storage(nest, name));
+
 
   everywhere(nest => {
     nest.state.connections = new Map;
@@ -155,4 +180,5 @@ module.exports = {
   availableNeighbors: availableNeighbors,
   sendGossip: sendGossip,
   routeRequest: routeRequest,
+  findInStorage: findInStorage,
 }
