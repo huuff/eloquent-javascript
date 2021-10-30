@@ -7,10 +7,21 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index_bundle.js',
+    publicPath: '/',
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [ { loader: 'style-loader'}, { loader: 'css-loader' } ],
+      }
+    ]
   },
 
   devServer: {
     static: path.join(__dirname, "dist"),
+    historyApiFallback: true,
   },
 
   plugins: [new HtmlWebpackPlugin({
