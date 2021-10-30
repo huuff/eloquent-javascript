@@ -1,4 +1,4 @@
-import { Player, Lava, Coin } from "./actors.js";
+import { Player, Lava, Coin, Vec } from "./actors.js";
 
 const levelChars = {
   ".": "empty",
