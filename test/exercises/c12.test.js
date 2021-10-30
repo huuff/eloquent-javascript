@@ -1,8 +1,9 @@
 const { run } = require("../../src/projects/c12/run");
-const { addArrays } = require("../../src/exercises/c12");
+const { addArrays, addSetForm } = require("../../src/exercises/c12");
 
 beforeAll(() => {
   addArrays();
+  addSetForm();
 })
 
 test("array length", () => {
@@ -32,4 +33,15 @@ test("array element with comment", () => {
         element(arr, 1)
       )
     `)).toBe(2);
+});
+
+test("mutate non-local binding", () => {
+  expect(run(`
+    do(
+      define(a, 2),
+      define(f, fun(set(a, 3))),
+      f(),
+      a
+    )
+    `)).toEqual(3);
 });
