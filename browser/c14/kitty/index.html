@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <p style="text-align: center">
+    <img id="cat" src="img/cat.png" style="position: relative">
+    <img id="hat" src="img/hat.png" style="position: relative">
+  </p>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script>
+    function animate(time, lastTime, targetId, angle = Math.PI / 2) {
+      let targetElement = document.querySelector(`#${targetId}`)
+      if (lastTime != null) {
+        angle += (time - lastTime) * 0.001;
+      }
+
+      targetElement.style.top = (Math.sin(angle) * 20) + "px";
+      targetElement.style.left = (Math.cos(angle) * 200) + "px";
+      requestAnimationFrame(newTime => animate(newTime, time, targetId, angle));
+    }
+    requestAnimationFrame(_.bind(animate, null, _, _, "cat"));
+    requestAnimationFrame(_.bind(animate, null, _, _, "hat", ((3 * Math.PI) / 2)))
+  </script>
+</body>
+</html>
