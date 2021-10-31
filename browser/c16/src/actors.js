@@ -73,7 +73,7 @@ export class Lava {
   }
 
   get type() {
-    return "Lava";
+    return "lava";
   }
 
   static create(pos, ch) {
