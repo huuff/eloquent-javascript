@@ -30,7 +30,7 @@ export class Player {
   }
 
   static create(pos) {
-    return new Player(pos.plus(new Vec(0, -0.5), new Vec(0, 0)));
+    return new Player(pos.plus(new Vec(0, -0.5)), new Vec(0, 0));
   }
 
   update(time, state, keys) {

@@ -1,3 +1,5 @@
+const scale = 30;
+
 function elt(name, attrs, ...children) {
   let dom = document.createElement(name);
 
@@ -25,7 +27,7 @@ export class DOMDisplay {
 
   syncState(state) {
     if (this.actorLayer) {
-      this.actorLater.remove();
+      this.actorLayer.remove();
     }
 
     this.actorLayer = drawActors(state.actors);
@@ -40,15 +42,20 @@ export class DOMDisplay {
     let margin = width / 3;
 
     // The viewport
+  console.log(this.dom.scrollTop);
     let left = this.dom.scrollLeft, right = left + width;
     let top = this.dom.scrollTop, bottom = top + height;
 
     let player = state.player;
-    let center = player.pos.plus(player.size.times(0.5).times(scale));
+    let center = player.pos.plus(player.size.times(0.5)).times(scale);
+    console.log(`Center: ${JSON.stringify(center)}`);
+    console.log(`Left: ${left}`);
+    console.log(`Rigth: ${right}`)
 
     if (center.x < left + margin) {
       this.dom.scrollLeft = center.x - margin;
     } else if (center.x > right - margin) {
+      console.log("Should be at the right border")
       this.dom.scrollLeft = center.x + margin - width;
     }
     
@@ -60,7 +67,6 @@ export class DOMDisplay {
   }
 }
 
-const scale = 40;
 
 function drawGrid(level) {
   return elt("table", {

@@ -1,10 +1,6 @@
 import './game.css';
-import { Level, simpleLevelPlan } from "./levels.js";
 import { DOMDisplay } from './display.js';
-import { State } from './state';
+import { runGame } from "./game.js";
+import { GAME_LEVELS } from "./game_levels.js";
 
-let simpleLevel = new Level(simpleLevelPlan);
-console.log(`SimpleLevel size: ${simpleLevel.width} by ${simpleLevel.height}`);
-
-let display = new DOMDisplay(document.body, simpleLevel);
-display.syncState(State.start(simpleLevel));
+runGame(GAME_LEVELS, DOMDisplay)
