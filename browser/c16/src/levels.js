@@ -1,4 +1,4 @@
-import { Player, Lava, Coin, Vec } from "./actors.js";
+import { Player, Lava, Coin, Monster, Vec } from "./actors.js";
 
 const levelChars = {
   ".": "empty",
@@ -9,6 +9,7 @@ const levelChars = {
   "=": Lava,
   "|": Lava,
   "v": Lava,
+  "e": Monster,
 };
 
 export class Level {

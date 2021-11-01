@@ -12,6 +12,10 @@
   background: rgb(255, 100, 100);
 }
 
+.monster {
+  background: rgb(100, 255, 100);
+}
+
 .wall {
   background: white;
 }

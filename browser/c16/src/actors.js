@@ -104,6 +104,46 @@ export class Lava {
 
 Lava.prototype.size = new Vec(1, 1);
 
+export class Monster {
+  constructor(pos, speed) {
+    this.pos = pos;
+    this.speed = speed;
+  }
+
+  get type() {
+    return "monster";
+  }
+
+
+  collide(state) {
+    console.log(`Player collided with monster`)
+    console.log(`Player position: ${JSON.stringify(state.player.pos)}`)
+    console.log(`Monster position: ${JSON.stringify(this.pos)}`)
+    if (state.player.pos.y < (this.pos.y-1)) {
+      return new State(state.level, state.actors.filter(a => a !== this), "playing");
+    } else {
+      return new State(state.level, state.actors, "lost");
+    }
+  }
+
+  static create(pos) {
+    console.log("Creating a monster!");
+    return new Monster(pos, new Vec(3, 0));
+  }
+
+  update(time, state) {
+    let newPos = this.pos.plus(this.speed.times(time));
+    if (state.level.touches(newPos, this.size, "wall")) {
+      return new Monster(this.pos, this.speed.times(-1));
+    } else {
+      return new Monster(newPos, this.speed);
+    }
+  }
+
+}
+
+Monster.prototype.size = new Vec(1, 1);
+
 const wobbleSpeed = 8, wobbleDist = 0.07;
 
 export class Coin {
