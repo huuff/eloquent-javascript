@@ -2,7 +2,7 @@ import { Picture } from "./state.js";
 import { ToolSelect, ColorSelect, PixelEditor } from "./application.js";
 import { SaveButton, LoadButton } from "./save_and_load.js";
 import { historyUpdateState, UndoButton } from "./history.js";
-import { draw, fill, rectangle, pick } from "./draw.js";
+import { draw, fill, rectangle, pick, circle } from "./draw.js";
 
 const startState = {
   tool: "draw",
@@ -12,7 +12,7 @@ const startState = {
   doneAt: 0,
 };
 
-const baseTools = { draw, fill, rectangle, pick };
+const baseTools = { draw, fill, rectangle, pick, circle };
 
 const baseControls = [
   ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton

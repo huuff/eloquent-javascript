@@ -28,6 +28,35 @@ export function rectangle(start, state, dispatch) {
   return drawRectangle;
 }
 
+
+export function circle(start, state, dispatch) {
+  function drawCircle(pos) {
+    let xStart = Math.min(start.x, pos.x);
+    let yStart = Math.min(start.y, pos.y);
+    let xEnd = Math.max(start.x, pos.x);
+    let yEnd = Math.max(start.y, pos.y);
+    let drawn = [];
+
+    let xSide = xEnd - xStart;
+    let ySide = yEnd - yStart;
+    let shortestSide = Math.min(xSide, ySide)/2;
+    let centerX = xStart + (xSide / 2);
+    let centerY = yStart + (ySide / 2);
+
+    for (let y = yStart; y <= yEnd; y++) {
+      for (let x = xStart; x <= xEnd; x++) {
+        let hyp = Math.sqrt(((centerX - x) ** 2) + ((centerY - y) ** 2));
+        if (hyp < shortestSide)
+          drawn.push({x, y, color: state.color});
+      }
+    }
+
+    dispatch({picture: state.picture.draw(drawn)});
+  }
+  drawCircle(start);
+  return drawCircle;
+}
+
 const around = [
   { dx: -1, dy: 0 },
   { dx: 1, dy: 0 },
