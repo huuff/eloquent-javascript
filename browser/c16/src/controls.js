@@ -12,4 +12,4 @@ export function trackKeys(keys) {
   return down;
 }
 
-export const arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
+export const arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp", "Escape"]);

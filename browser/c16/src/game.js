@@ -23,9 +23,14 @@ function runLevel(level, Display) {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
+  let paused = false;
 
   return new Promise(resolve => {
     runAnimation(time => {
+      if (arrowKeys.Escape) {
+        paused = !paused;
+      }
+      if (paused) return true;
       state = state.update(time, arrowKeys);
       display.syncState(state);
       if (state.status == "playing") {
