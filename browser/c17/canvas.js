@@ -40,7 +40,25 @@ function ziggy(leftX, topY, rightX, bottomY, lines) {
   cx.stroke();
 }
 
+function spiral(centerX, centerY, strokes, radius) {
+  const angleIncrements = (10 * Math.PI) / strokes;
+  const radiusDecrements = radius / strokes;
+  let angle = 0;
+  cx.beginPath();
+  cx.moveTo(centerX + (Math.cos(angle) * radius), centerY + (Math.sin(angle) * radius));
+  for (let i = 0; i < strokes; i++) {  
+    angle += angleIncrements;
+    radius -= radiusDecrements;
+    let xCoord = centerX + (Math.cos(angle) * radius);
+    let yCoord = centerY + (Math.sin(angle) * radius);
+    console.log(`Next coordinates: (${xCoord}, ${yCoord}), Next angle: ${angle}, Next radius: ${radius}`)
+    cx.lineTo(xCoord, yCoord);
+  }
+  cx.stroke();
+}
+
 
 trapezoid(10, 30, 30, 40, 20);
 redDiamond(80, 10, 20);
 ziggy(120, 10, 140, 40, 10);
+spiral(180, 20, 100, 20);
