@@ -30,6 +30,12 @@ export class PixelEditor {
   keyHandler(event, dispatch) {
     if (event.ctrlKey && event.key === "z") {
       dispatch({undo: true});
+    } else if (event.key === "d") {
+      dispatch({tool: "draw" });
+    } else if (event.key === "r") {
+      dispatch({tool: "rectangle"});
+    } else if (event.key === "f") {
+      dispatch({tool: "fill"});
     }
   }
 }
