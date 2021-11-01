@@ -1,7 +1,8 @@
-import { Picture } from "./canvas.js";
-import { ToolSelect, ColorSelect } from "./application.js";
+import { Picture } from "./state.js";
+import { ToolSelect, ColorSelect, PixelEditor } from "./application.js";
 import { SaveButton, LoadButton } from "./save_and_load.js";
 import { historyUpdateState, UndoButton } from "./history.js";
+import { draw, fill, rectangle, pick } from "./draw.js";
 
 const startState = {
   tool: "draw",
@@ -17,11 +18,11 @@ const baseControls = [
   ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton
 ];
 
-function startPixelEditor({
+function startPixelEditor(
   state = startState,
   tools = baseTools,
   controls = baseControls
-}) {
+) {
   let app = new PixelEditor(state, {
     tools,
     controls,
@@ -33,3 +34,5 @@ function startPixelEditor({
 
   return app.dom;
 }
+
+document.querySelector("#container").appendChild(startPixelEditor());

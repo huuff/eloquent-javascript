@@ -19,7 +19,9 @@ export class PixelEditor {
   syncState(state) {
     this.state = state;
     this.canvas.syncState(state.picture);
-    for (let ctrl of this.controls) ctrl.syncState(state);
+    for (let ctrl of this.controls) {
+      ctrl.syncState(state);
+    }
   }
 }
 
@@ -32,6 +34,10 @@ export class ToolSelect {
     }, name)))
     this.dom = elt("label", null, "Tool: ", this.select);
   }
+
+  syncState(state) {
+    this.select.value = state.tool;
+  }
 }
 
 export class ColorSelect {
@@ -41,6 +47,7 @@ export class ColorSelect {
       value: state.color,
       onchange: () => dispatch({color: this.input.value}),
     });
+    this.dom = elt("label", null, "Color: ", this.input);
   }
 
   syncState(state) {
