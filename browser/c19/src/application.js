@@ -13,7 +13,10 @@ export class PixelEditor {
     });
 
     this.controls = controls.map(Control => new Control(state, config));
-    this.dom = elt("div", {}, this.canvas.dom, elt("br"), ...this.controls.reduce((a, c) => a.concat(" ", c.dom), []));
+    this.dom = elt("div", {
+      tabIndex: 0,
+      onkeyup: (e) => this.keyHandler(e, dispatch),
+    }, this.canvas.dom, elt("br"), ...this.controls.reduce((a, c) => a.concat(" ", c.dom), []));
   }
 
   syncState(state) {
@@ -21,6 +24,12 @@ export class PixelEditor {
     this.canvas.syncState(state.picture);
     for (let ctrl of this.controls) {
       ctrl.syncState(state);
+    }
+  }
+
+  keyHandler(event, dispatch) {
+    if (event.ctrlKey && event.key === "z") {
+      dispatch({undo: true});
     }
   }
 }
