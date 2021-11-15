@@ -1,10 +1,15 @@
 const { createServer } = require("http");
-const { createReadStream } = require("fs");
-const { stat, readdir } = require("fs").promises;
 const mime = require("mime");
 const { urlPath } = require("./urlPath");
-const { rmdir, unlink } = require("fs").promises;
-const { createWriteStream } = require("fs");
+const { 
+  rmdir, 
+  unlink,
+  createWriteStream,
+  createReadStream,
+  stat,
+  readdir,
+  mkdir,
+} = require("fs").promises;
 const { pipeStream } = require("./pipeStream");
 
 const methods = {
@@ -55,6 +60,12 @@ const methods = {
   PUT: async function(request) {
     let path = urlPath(request.url);
     await pipeStream(request, createWriteStream(path));
+    return { status: 204 };
+  },
+
+  MKCOL: async function(request) {
+    let path = urlPath(request.url);
+    await mkdir(path);
     return { status: 204 };
   },
 };
