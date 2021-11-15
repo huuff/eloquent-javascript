@@ -3,6 +3,9 @@ const { createReadStream } = require("fs");
 const { stat, readdir } = require("fs").promises;
 const mime = require("mime");
 const { urlPath } = require("./urlPath");
+const { rmdir, unlink } = require("fs").promises;
+const { createWriteStream } = require("fs");
+const { pipeStream } = require("./pipeStream");
 
 const methods = {
   GET: async function(request) {
@@ -25,7 +28,35 @@ const methods = {
         type: mime.getType(path),
       };
     }
-  }
+  },
+
+  DELETE: async function(request) {
+    let path = urlPath(request.url);
+    let stats;
+    try {
+      stats = await stat(path);
+    } catch (error) {
+      if (error.code != "ENOENT") {
+        throw error;
+      } else {
+        return { status: 204 };
+      }
+    }
+
+    if (stats.isDirectory()) {
+      await rmdir(path);
+    } else {
+      await unlink(path);
+    }
+
+    return { status: 204 };
+  },
+
+  PUT: async function(request) {
+    let path = urlPath(request.url);
+    await pipeStream(request, createWriteStream(path));
+    return { status: 204 };
+  },
 };
 
 createServer((request, response) => {
