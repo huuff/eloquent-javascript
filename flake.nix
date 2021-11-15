@@ -14,6 +14,7 @@
     devShell.${system} = mkShell {
       nativeBuildInputs = [
         nodePackages.npm
+        nodejs-17_x
       ];
     };
   };
