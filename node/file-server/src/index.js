@@ -4,12 +4,11 @@ const { urlPath } = require("./urlPath");
 const { 
   rmdir, 
   unlink,
-  createWriteStream,
-  createReadStream,
   stat,
   readdir,
   mkdir,
 } = require("fs").promises;
+const { createReadStream, createWriteStream } = require("fs");
 const { pipeStream } = require("./pipeStream");
 
 const methods = {
